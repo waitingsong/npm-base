@@ -1,4 +1,6 @@
 {
+  "debug.node.autoAttach": "on",
+  "debug.javascript.usePreviewAutoAttach": false,
   "editor.minimap.renderCharacters": false,
   "editor.renderFinalNewline": false,
   "editor.tabSize": 2,
@@ -6,6 +8,12 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
+  "eslint.run": "onSave",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript"
+  ],
   "files.eol": "\n",
   "files.exclude": {
     "**/*.js": {
@@ -61,10 +69,12 @@
     "**/tmp/**": true
   },
   "files.trimTrailingWhitespace": true,
+  "git.ignoreLimitWarning": true,
   "search.exclude": {
     "i18n/**": true,
     "library/": true,
     "node_modules": true,
+    "packages/*/node_modules*": true,
     "platforms/": true,
     "www/": true,
     "**/node_modules*": true,
@@ -72,6 +82,8 @@
   },
   "search.useIgnoreFiles": true,
   "telemetry.enableTelemetry": false,
+  "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+  "terminal.integrated.automationShell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
   "typescript.autoClosingTags": false,
   "typescript.format.enable": true,
   "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
@@ -80,8 +92,10 @@
   "typescript.format.insertSpaceBeforeAndAfterBinaryOperators": true,
   "typescript.format.semicolons": "remove",
   "typescript.preferences.quoteStyle": "single",
+  "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one",
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "files.trimTrailingWhitespace": false
@@ -89,7 +103,5 @@
   "[typescript]": {
     "editor.formatOnPaste": true,
     "editor.formatOnSave": false
-  },
-  "git.ignoreLimitWarning": true,
-  "typescript.tsdk": "./node_modules/typescript/lib"
+  }
 }

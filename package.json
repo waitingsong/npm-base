@@ -29,8 +29,8 @@
   "devDependencies": {
     "@commitlint/cli": "11",
     "@commitlint/config-conventional": "11",
-    "@rollup/plugin-commonjs": "16",
-    "@rollup/plugin-node-resolve": "10",
+    "@rollup/plugin-commonjs": "17",
+    "@rollup/plugin-node-resolve": "11",
     "@types/mocha": "8",
     "@types/node": "14",
     "@types/power-assert": "1",
@@ -82,6 +82,7 @@
     "lint:nofix": "eslint --cache {src,test}/**/*.ts",
     "postpublish": "git push origin --follow-tags",
     "prepublishOnly": "npm run clean && npm run build",
+    "purge": "npm run clean && rm node_modules -rf",
     "release": "standard-version -r",
     "release:first": "standard-version --first-release",
     "repo:init": "sh .githooks/init-repo.sh",
