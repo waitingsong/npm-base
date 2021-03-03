@@ -59,7 +59,7 @@ jobs:
           git config user.name $GITHUB_ACTOR
           git config user.email gh-actions-${GITHUB_ACTOR}@github.com
           npm run release ${{ github.event.inputs.semver }}
-          npm run publish
+          npm publish
           git push -v origin --follow-tags
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
