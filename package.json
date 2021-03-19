@@ -13,7 +13,7 @@
   "es2015": "",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./src/index.ts",
   "bugs": {
     "url": "https://github.com/waitingsong/npm-base/issues"
   },
@@ -37,7 +37,7 @@
     "@types/rimraf": "3",
     "@types/yargs": "16",
     "@waiting/eslint-config": "6",
-    "@waiting/shared-core": "6",
+    "@waiting/shared-core": "7",
     "coveralls": "3",
     "cross-env": "7",
     "eslint": "7",
@@ -48,7 +48,6 @@
     "power-assert": "1",
     "rewire": "5",
     "rimraf": "3",
-    "rollup": "2",
     "rollup-plugin-terser": "7",
     "rxjs": "6",
     "rxrunscript": "5",
@@ -60,6 +59,7 @@
     "node": ">=14.15.0"
   },
   "files": [
+    "src/**/*.ts",
     "dist"
   ],
   "publishConfig": {
