@@ -13,7 +13,7 @@
   "es2015": "",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.js",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "bugs": {
     "url": "https://github.com/waitingsong/npm-base/issues"
   },
@@ -23,21 +23,20 @@
     "url": "git+https://github.com/waitingsong/npm-base.git"
   },
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@commitlint/cli": "12",
     "@commitlint/config-conventional": "12",
-    "@rollup/plugin-commonjs": "17",
-    "@rollup/plugin-node-resolve": "11",
+    "@rollup/plugin-commonjs": "19",
+    "@rollup/plugin-node-resolve": "13",
     "@types/mocha": "8",
-    "@types/node": "14",
+    "@types/node": "15",
     "@types/power-assert": "1",
     "@types/rewire": "2",
     "@types/rimraf": "3",
     "@types/yargs": "16",
     "@waiting/eslint-config": "6",
-    "@waiting/shared-core": "7",
+    "@waiting/shared-core": "9",
     "coveralls": "3",
     "cross-env": "7",
     "eslint": "7",
@@ -49,11 +48,11 @@
     "rewire": "5",
     "rimraf": "3",
     "rollup-plugin-terser": "7",
-    "rxjs": "6",
-    "rxrunscript": "5",
+    "rxjs": "7",
+    "rxrunscript": "6",
     "ts-node": "9",
     "typescript": "4",
-    "yargs": "16"
+    "yargs": "17"
   },
   "engines": {
     "node": ">=14.15.0"
