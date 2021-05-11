@@ -10,6 +10,6 @@ const folderArr = [
     'resource',
     'configs',
     'config',
-    'src/config',
+    'src/config', // midway
 ];
 exports.default = folderArr;

@@ -12,8 +12,8 @@ function isSkipCommitlint(options) {
         console.info('COMMIT_EDITMSG value blank');
         return rxjs_1.of(1);
     }
-    const protectRule$ = rxjs_1.from(protectBranch).pipe(operators_1.defaultIfEmpty());
-    const skipRule$ = rxjs_1.from(skipMsg).pipe(operators_1.defaultIfEmpty());
+    const protectRule$ = rxjs_1.from(protectBranch).pipe(operators_1.defaultIfEmpty(void 0));
+    const skipRule$ = rxjs_1.from(skipMsg).pipe(operators_1.defaultIfEmpty(void 0));
     const content$ = init_utils_1.pathAccessible(commitFile).pipe(operators_1.tap(path => {
         if (!path) {
             console.info(`COMMIT_EDITMSG file not exists: "${commitFile}"`);
@@ -23,9 +23,15 @@ function isSkipCommitlint(options) {
         const head = msg.split(/\n|\r\n/)[0];
         return { head, msg };
     }), operators_1.share());
-    const protectTest$ = rxjs_1.combineLatest(rxjs_1.of(branchName), protectRule$).pipe(operators_1.map(([branch, regex]) => regex && regex.test(branch) ? true : false), operators_1.filter(matched => matched), operators_1.mapTo(0), // process.exit(0)
+    const protectTest$ = rxjs_1.combineLatest({
+        branch: rxjs_1.of(branchName),
+        regex: protectRule$,
+    }).pipe(operators_1.map(({ branch, regex }) => regex && regex.test(branch) ? true : false), operators_1.filter(matched => matched), operators_1.mapTo(0), // process.exit(0)
     operators_1.defaultIfEmpty(1));
-    const skipTest$ = rxjs_1.combineLatest(content$, skipRule$).pipe(operators_1.map(([{ head }, regex]) => regex && regex.test(head) ? true : false), operators_1.filter(matched => matched), operators_1.mapTo(1), // process.exit(1)
+    const skipTest$ = rxjs_1.combineLatest({
+        content: content$,
+        regex: skipRule$,
+    }).pipe(operators_1.map(({ content, regex }) => regex && regex.test(content.head) ? true : false), operators_1.filter(matched => matched), operators_1.mapTo(1), // process.exit(1)
     operators_1.defaultIfEmpty(0));
     const exitCode$ = rxjs_1.forkJoin(protectTest$, skipTest$).pipe(operators_1.map(([pro, skip]) => {
         // console.info('pro:skip', pro, skip)

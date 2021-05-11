@@ -78,6 +78,7 @@
     "link_global": "npm link typescript",
     "lint": "eslint --fix --cache {src,test}/**/*.ts",
     "lint:nofix": "eslint --cache {src,test}/**/*.ts",
+    "postinstall": "npm run repo:init",
     "postpublish": "git push origin --follow-tags",
     "prepublishOnly": "npm run clean && npm run build",
     "purge": "npm run clean && rm node_modules -rf",

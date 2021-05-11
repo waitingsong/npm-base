@@ -13,8 +13,6 @@ git init \
   && git config --local remote.origin.prune true \
   && git config --local remote.origin.tagopt --tags \
   && git config --local remote.pushdefault origin \
-  && echo It may going for a long time. Plese wait... \
-  && npm i --loglevel=info \
   && npm run link_global \
   && cd .githooks && tsc \
   && node gen-file-from-example.js
