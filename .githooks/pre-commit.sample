@@ -18,14 +18,14 @@ else
 fi
 
 branch=$( git branch | grep \* | cut -d ' ' -f2- )
-if [[ $branch != "master" ]]; then
+if [[ $branch != "main" ]]; then
   exit 0
 fi
 
 # ------------- parse ts
 files=$(git diff --cached --name-only --diff-filter=ACMR $against|grep '\.ts$')
 if [[ $files != "" ]] ; then
-  #echo $files | xargs tslint -p tsconfig.json -e **/*.d.ts ./.githooks/* -t stylish 
+  # echo $files | xargs eslint --fix 
   npm run lint
   rc=$?
   if [[ $rc != 0 ]] ; then

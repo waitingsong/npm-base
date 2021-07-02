@@ -9,20 +9,20 @@ const init_utils_1 = require("./init-utils");
 async function genFileFromExample(rootDir, list) {
     const copied = [];
     for (const dir of list) {
-        const path = init_utils_1.join(rootDir, dir.replace(/\.{2,}/, '/'));
-        if (!await init_utils_1.isPathAccessible(path)) {
+        const path = (0, init_utils_1.join)(rootDir, dir.replace(/\.{2,}/, '/'));
+        if (!await (0, init_utils_1.isPathAccessible)(path)) {
             continue;
         }
-        const files = await init_utils_1.readDirAsync(path);
+        const files = await (0, init_utils_1.readDirAsync)(path);
         for (const file of files) {
             if (!hasExampleSuffix(file)) {
                 continue;
             }
-            const source = init_utils_1.join(path, file);
+            const source = (0, init_utils_1.join)(path, file);
             const stripped = stripExampleSuffix(file);
-            const target = init_utils_1.join(path, stripped);
-            if (!await init_utils_1.isPathAccessible(target)) {
-                await init_utils_1.copyFileAsync(source, target);
+            const target = (0, init_utils_1.join)(path, stripped);
+            if (!await (0, init_utils_1.isPathAccessible)(target)) {
+                await (0, init_utils_1.copyFileAsync)(source, target);
                 copied.push(`${dir}/${stripped}`);
             }
         }

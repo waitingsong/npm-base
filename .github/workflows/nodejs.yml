@@ -7,11 +7,12 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    container: node:16-bullseye
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
 
     strategy:
       matrix:
-        node: [14, 16]
+        node: [16, 17]
         os: [ubuntu-latest]
 
     steps:
@@ -20,6 +21,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
+
       - name: Cache
         uses: actions/cache@v2
         id: cache-lerna
@@ -28,23 +30,66 @@ jobs:
         with:
           path: |
             node_modules
-            */*/node_modules
-          key: ${{ runner.OS }}-build-${{ env.cache-name }}-${{ github.ref }}-${{ hashFiles('**/lockfiles') }}
+            package-lock.json
+            packages/*/.eslintcache
+            packages/*/.vscode
+            packages/*/dist
+            packages/*/node_modules
+            packages/*/package-lock.json
+          key: ${{ runner.OS }}-build-${{ env.cache-name }}-${{ github.ref }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-${{ env.cache-name }}-${{ github.ref }}-
 
-      - name: npm build
+      - name: Prepare
         run: |
+          uname -a
+          export DEBIAN_FRONTEND=noninteractive
+          apt-get update -qq --yes > /dev/null
+          apt-get upgrade -qq --yes > /dev/null
+          apt-get install -qq --yes --no-install-recommends bash dnsutils git jq locales net-tools wget > /dev/null
+          apt-get install -qq --yes postgresql-client > /dev/null
+          uname -a
+          npm -v && node -v
+          git --version
           openssl version
-          node -v
-          npm install nyc rollup
-          npm run lint:nofix
+          cat /etc/*release
+          sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen
+          locale-gen
+          locale -a
+
+      - name: Build
+        run: |
+          whoami
+          export cwd=`pwd`
+          . .scripts/ci/ci-env.sh
+          sh .scripts/ci/ci-prepare.sh
+          sh .github/workflows/fix.sh
+          npm i -g c8 rollup standard-version
+          sh .github/workflows/fix.sh
+          npm i
+          sh .github/workflows/fix.sh
           npm run build --if-present
         env:
           CI: true
-      - name: npm ci
+
+      - name: Lint
         run: |
+          export cwd=`pwd`
+          . .scripts/ci/ci-env.sh
+          sh .scripts/ci/ci-prepare.sh
+          npm run lint:nofix
+        env:
+          CI: true
+
+      - name: Testing
+        run: |
+          export cwd=`pwd`
+          . .scripts/ci/ci-env.sh
+          sh .scripts/ci/ci-prepare.sh
           npm run cov
         env:
           CI: true
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
 

@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const init_example_file_1 = require("./init-example-file");
 const init_utils_1 = require("./init-utils");
 const init_config_1 = require("./init.config");
-const rootDir = init_utils_1.join(__dirname, '..');
-init_example_file_1.genFileFromExample(rootDir, init_config_1.default)
+const rootDir = (0, init_utils_1.join)(__dirname, '..');
+(0, init_example_file_1.genFileFromExample)(rootDir, init_config_1.default)
     .then(files => {
     console.info('生成文件：', files);
 })

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "declaration": false,
+    "baseUrl": ".",
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -13,13 +14,19 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "dist",
+    "paths": {
+      "~/*": ["./src/*"],
+      "@/*": ["./test/*"]
+    },
     "pretty": true,
     "skipLibCheck": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "strict": true,
-    "target": "ES2019",
+    "strictPropertyInitialization": false,
+    "stripInternal": true,
+    "target": "ES2021",
     "tsBuildInfoFile": ".vscode/.tsbuildinfo",
-    "types" : ["node", "mocha"]
+    "types" : ["mocha", "node"]
   },
   "include": [
     "src/**/*.ts"

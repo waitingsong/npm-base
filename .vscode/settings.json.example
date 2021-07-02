@@ -6,8 +6,7 @@
   "editor.tabSize": 2,
   "editor.wordWrap": "on",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.organizeImports": false
+    "source.fixAll.eslint": true
   },
   "eslint.run": "onSave",
   "eslint.validate": [
@@ -108,6 +107,7 @@
   "typescript.format.insertSpaceAfterTypeAssertion": true,
   "typescript.format.insertSpaceBeforeAndAfterBinaryOperators": true,
   "typescript.format.semicolons": "remove",
+  "typescript.locale": "zh-CN",
   "typescript.preferences.quoteStyle": "single",
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.updateImportsOnFileMove.enabled": "always",
@@ -115,12 +115,13 @@
     "editor.defaultFormatter": "yzhang.markdown-all-in-one",
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
+    "editor.quickSuggestions": true,
     "files.trimTrailingWhitespace": false
   },
   "[typescript]": {
     "editor.formatOnPaste": true,
     "editor.formatOnSave": false
   },
-  "workbench.editor.wrapTabs": true
+  "workbench.editor.wrapTabs": false
 }
 
