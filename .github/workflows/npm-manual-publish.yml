@@ -7,8 +7,7 @@ on:
     inputs:
       semver:
         description: 'Leave empty or input major|minor|patch'
-        required: false
-        default: ''
+        required: true
 
 jobs:
   build:
@@ -114,9 +113,11 @@ jobs:
 
       - name: NPM Publish
         run: |
+          whoami
           export cwd=`pwd`
           . .scripts/ci/ci-env.sh
           git restore .
+          chmod 777 package.json CHANGELOG.md
           git config user.name $GITHUB_ACTOR
           git config user.email gh-actions-${GITHUB_ACTOR}@github.com
           npm run release ${{ github.event.inputs.semver }}
