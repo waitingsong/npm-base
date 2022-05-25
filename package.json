@@ -5,21 +5,18 @@
   "description": "npm boilerplate",
   "keywords": [
     "种子项目",
+    "ESM",
     "typescript",
     "ts"
   ],
+  "type": "module",
   "bin": {},
-  "main": "dist/index.mjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "types": "src/index.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    },
-    "./index.min.js": {
-      "import": "./dist/index.min.mjs",
-      "require": "./dist/index.min.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -34,8 +31,8 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "@commitlint/cli": "16",
-    "@commitlint/config-conventional": "16",
+    "@commitlint/cli": "17",
+    "@commitlint/config-conventional": "17",
     "@rollup/plugin-commonjs": "22",
     "@rollup/plugin-node-resolve": "13",
     "@types/mocha": "9",
@@ -43,8 +40,8 @@
     "@types/rewire": "2",
     "@types/rimraf": "3",
     "@types/yargs": "17",
-    "@waiting/eslint-config": "^7.4.0",
-    "@waiting/shared-core": "^17.0.0",
+    "@waiting/eslint-config": "^8.0.0",
+    "@waiting/shared-core": "^18.0.0",
     "coveralls": "3",
     "cross-env": "7",
     "eslint": "8",
@@ -52,13 +49,12 @@
     "mocha-lcov-reporter": "1",
     "rewire": "6",
     "rimraf": "3",
-    "rollup": "~2.66",
     "rollup-plugin-terser": "7",
     "rxjs": "^7.5.0",
-    "rxrunscript": "9",
-    "ts-node": "^10.7.0",
+    "rxrunscript": "10",
+    "ts-node": "^10.8.0",
     "tsconfig-paths": "3",
-    "typescript": "^4.6.0",
+    "typescript": "^4.7.2",
     "yargs": "17",
     "zx": "6"
   },
