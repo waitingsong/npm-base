@@ -28,7 +28,7 @@
       "restart": false,
       "runtimeArgs": [
         "run",
-        "test:local",
+        "test",
         "--",
         "--runInBand",
         "--preserve-symlinks",
