@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node: [16, 18]
+        node: [16]
         os: [ubuntu-latest]
 
     steps:
@@ -64,7 +64,7 @@ jobs:
           . .scripts/ci/ci-env.sh
           .scripts/ci/ci-prepare.sh
           .github/workflows/fix.sh
-          npm i -g c8 rollup standard-version
+          npm i -g c8 rollup standard-version zx
           .github/workflows/fix.sh
           npm run bootstrap
           .github/workflows/fix.sh
