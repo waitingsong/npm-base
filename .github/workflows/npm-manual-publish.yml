@@ -7,28 +7,32 @@ on:
     inputs:
       semver:
         description: 'Leave empty or input major|minor|patch'
-        required: true
+        required: false
+        default: ''
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    container: node:16-bullseye
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    container: node:current
+    timeout-minutes: 60
 
     strategy:
       matrix:
-        node: [18]
+        node: ['lts/*']
         os: [ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # pulls all commits (needed for lerna / semantic release to correctly version)
           fetch-depth: "0"
       # Caution: disable fix below at FIRST publish, then enable
       - name: Fix for semantic release
         # pulls all tags (needed for lerna / semantic release to correctly version)
-        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+        run: |
+          export cwd=`pwd`
+          git config --global --add safe.directory $cwd
+          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v3
         with:
@@ -36,7 +40,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: cache-lerna
         env:
           cache-name: cache-lerna
@@ -44,11 +48,6 @@ jobs:
           path: |
             node_modules
             package-lock.json
-            packages/*/.eslintcache
-            packages/*/.vscode
-            packages/*/dist
-            packages/*/node_modules
-            packages/*/package-lock.json
           key: ${{ runner.OS }}-build-${{ env.cache-name }}-${{ github.ref }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.OS }}-build-${{ env.cache-name }}-${{ github.ref }}-
@@ -58,7 +57,7 @@ jobs:
           uname -a
           export DEBIAN_FRONTEND=noninteractive
           apt-get update -qq --yes > /dev/null
-          apt-get upgrade -qq --yes > /dev/null
+          # apt-get upgrade -qq --yes > /dev/null
           apt-get install -qq --yes --no-install-recommends bash dnsutils git jq locales net-tools wget > /dev/null
           apt-get install -qq --yes postgresql-client > /dev/null
           uname -a
@@ -74,10 +73,24 @@ jobs:
         run: |
           echo $GITHUB_REF
           # github project/settings/Secrets/New repository secret: NPM_TOKEN
+          npm ping
           npm whoami
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Inatall Dependencies
+        timeout-minutes: 15
+        run: |
+          chmod a+w -R .
+          # DO NOT execute: npm config set unsafe-perm=true
+          export cwd=`pwd`
+          # .github/workflows/fix.sh
+          npm i --no-audit -g autocannon c8 lerna rollup tsx zx
+          # npm run purge
+          npm i --no-audit
+        env:
+          CI: true
 
       - name: Build
         run: |
@@ -85,11 +98,6 @@ jobs:
           export cwd=`pwd`
           . .scripts/ci/ci-env.sh
           .scripts/ci/ci-prepare.sh
-          .github/workflows/fix.sh
-          npm i -g c8 rollup standard-version zx
-          .github/workflows/fix.sh
-          npm run bootstrap
-          .github/workflows/fix.sh
           npm run build --if-present
         env:
           CI: true
@@ -108,27 +116,32 @@ jobs:
           export cwd=`pwd`
           . .scripts/ci/ci-env.sh
           .scripts/ci/ci-prepare.sh
-          npm run cov
+          # npm run cov
+          npm run test
         env:
           CI: true
 
       - name: NPM Publish
         run: |
-          whoami
+          npm ping
+          npm whoami
+          chmod a+w -R .
           export cwd=`pwd`
           . .scripts/ci/ci-env.sh
-          git restore .
-          chmod 777 package.json CHANGELOG.md
+          # fix: fatal: detected dubious ownership in repository
+          git config --global --add safe.directory $cwd
+          # git restore .
+          git reset --hard
           git config user.name $GITHUB_ACTOR
           git config user.email gh-actions-${GITHUB_ACTOR}@github.com
           npm run release ${{ github.event.inputs.semver }}
           npm publish
           git push -v origin --follow-tags
         env:
+          CI: true
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+
 
