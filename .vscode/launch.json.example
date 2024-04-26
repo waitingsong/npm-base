@@ -15,15 +15,17 @@
         "--colors",
         "--parallel=false"
       ],
+      "console": "internalConsole",
       "env": {
         "NODE_ENV": "unittest",
         "TS_NODE_PROJECT": "test/tsconfig.json",
-        "POSTGRES_HOST": "",
+        "POSTGRES_HOST": "127.0.0.1",
         "POSTGRES_PORT": "5432",
         "POSTGRES_DB": "",
         "POSTGRES_USER": "postgres",
         "POSTGRES_PASSWORD": ""
       },
+      "internalConsoleOptions": "openOnFirstSessionStart",
       "request": "launch",
       "restart": false,
       "runtimeArgs": [
@@ -31,8 +33,7 @@
         "test",
         "--",
         "--runInBand",
-        "--preserve-symlinks",
-        "--inspect-brk"
+        "--preserve-symlinks"
       ],
       "runtimeExecutable": "npm",
       "skipFiles": [
@@ -41,84 +42,8 @@
         "<node_internals>/**",
         "<node_internals>/**/*.js"
       ],
-      "internalConsoleOptions": "openOnSessionStart",
+      "smartStep": true,
       "timeout": 30000
-    },
-    {
-      "name": "Midway TEST",
-      "type": "node",
-      "autoAttachChildProcesses": true,
-      "console": "integratedTerminal",
-      "env": {
-        "NODE_ENV": "unittest",
-        "POSTGRES_HOST": "",
-        "POSTGRES_PORT": "5432",
-        "POSTGRES_DB": "",
-        "POSTGRES_USER": "postgres",
-        "POSTGRES_PASSWORD": ""
-      },
-      "request": "launch",
-      "restart": false,
-      "runtimeArgs": [
-        "run",
-        "test:local",
-        "--",
-        "--runInBand",
-        "--preserve-symlinks",
-        "--inspect-brk"
-      ],
-      "runtimeExecutable": "npm",
-      "skipFiles": [
-        "**/node_modules/rxjs/**",
-        "**/node_modules/mocha/**",
-        "<node_internals>/**",
-        "<node_internals>/**/*.js"
-      ],
-      "timeout": 30000
-    },
-    {
-      "name": "Midway Debug",
-      "type": "node",
-      "autoAttachChildProcesses": true,
-      "console": "integratedTerminal",
-      "env": {
-        "NODE_ENV": "local",
-        "TS_NODE_TYPE_CHECK": "false",
-        "TS_NODE_TRANSPILE_ONLY": "true",
-        "POSTGRES_HOST": "",
-        "POSTGRES_PORT": "5432",
-        "POSTGRES_DB": "",
-        "POSTGRES_USER": "",
-        "POSTGRES_PASSWORD": ""
-      },
-      "request": "launch",
-      "restart": true,
-      "runtimeArgs": [
-        "run",
-        "debug",
-        "--",
-        "--preserve-symlinks",
-        "--inspect-brk"
-      ],
-      "runtimeExecutable": "npm",
-      "skipFiles": [
-        "**/node_modules/**",
-        "**/node_modules/rxjs/**",
-        "<node_internals>/**",
-        "<node_internals>/**/*.js"
-      ],
-      "timeout": 30000
-    },
-    {
-      "name": "Chrome Debug with Karma",
-      "type": "chrome",
-      "address": "localhost",
-      "pathMapping": {
-        "/": "${workspaceRoot}/",
-        "/base/": "${workspaceRoot}/"
-      },
-      "port": 9333,
-      "request": "attach"
-    },
+    }
   ]
 }

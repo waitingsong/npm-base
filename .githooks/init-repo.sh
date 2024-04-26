@@ -9,10 +9,10 @@ set -e
 
 git init
 git config --global i18n.commitencoding utf-8
+git config --local core.autocrlf input
+git config --local core.eol lf
 
 if [ -z "$CI" ]; then
-  git config --local core.autocrlf false
-  git config --local core.eol lf
   git config --local core.filemode false
   git config --local core.hooksPath ./.githooks
   git config --local core.ignorecase false
@@ -30,3 +30,4 @@ echo It may going for a long time. Plese wait...
 .githooks/gen-file-from-example.mts
 
 echo init done
+
