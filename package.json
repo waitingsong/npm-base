@@ -1,7 +1,7 @@
 {
   "name": "npm-base",
   "author": "waiting",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "npm boilerplate",
   "keywords": [
     "种子项目",
@@ -30,32 +30,31 @@
     "url": "https://github.com/waitingsong/npm-base"
   },
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "@commitlint/cli": "19",
     "@commitlint/config-conventional": "19",
     "@types/mocha": "10",
     "@types/node": "20",
-    "@waiting/eslint-config": "^9.1.1",
-    "@waiting/shared-core": "^23.2.0",
+    "@waiting/eslint-config": "^10.25.0",
+    "@waiting/shared-core": "^23.6.1",
     "c8": "^9.1.0",
     "coveralls": "3",
     "cross-env": "7",
+    "debug": "4",
     "eslint": "8",
-    "madge": "^6.1.0",
     "mocha": "10",
     "mocha-lcov-reporter": "1",
-    "rewire": "7",
-    "rxrunscript": "11",
-    "ts-node": "^10.9.1",
+    "nx": "18",
+    "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.8",
-    "tsconfig-paths": "4",
     "tsx": "4",
-    "typescript": "^5.4.2",
-    "zx": "7"
+    "typescript": "^5.4.5",
+    "zx": "8"
   },
   "engines": {
-    "node": ">=18.12.0"
+    "node": ">=20.9.0"
   },
   "files": [
     "README.*.md",
@@ -68,8 +67,7 @@
     "bin",
     "database",
     "dist",
-    "!**/*.spec.*",
-    "!**/*.tsbuildinfo"
+    "!**/*.spec.*"
   ],
   "publishConfig": {
     "access": "public",
@@ -89,17 +87,19 @@
     "release:first": "standard-version --first-release",
     "repo:init": "sh .githooks/init-repo.sh",
     "build": "npm run tsc && tsc-alias && npm run rp",
+    "build:unit": "tsc -p test/tsconfig.json",
     "clean": "npm run clean:lock && npm run clean:dist && npm run clean:log",
     "clean:cache": "rm -rf .eslintcache .tsbuildinfo",
     "clean:dist": "npm run clean:cache && rm -rf dist/*",
     "clean:lock": "rm -f package-lock.json",
     "clean:log": "rm -rf ./logs ./run",
     "cov": "c8 --all npm run test -- --parallel=false",
-    "lint": "eslint --fix --cache {src,test}/**/*.ts",
-    "lint:nofix": "eslint --cache {src,test}/**/*.ts",
-    "pretest": "npm run build",
+    "lint": "eslint --fix --cache src test",
+    "lint:cycle": "madge --circular --extensions ts src",
+    "lint:nofix": "eslint --cache src test",
+    "pretest": "npm run build && npm run build:unit",
     "rp": "tsx bin-hashbang.js",
     "test": "cross-env NODE_ENV=test TS_NODE_PROJECT=test/tsconfig.json mocha --jobs=4",
-    "tsc": "tsc -b"
+    "tsc": "tsc -p tsconfig.json"
   }
 }
