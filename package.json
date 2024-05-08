@@ -80,6 +80,7 @@
     "build": "npm run tsc && tsc-alias && npm run rp",
     "build:unit": "tsc -p test/tsconfig.json",
     "ci": "npm run cov",
+    "postinstall": "npm run repo:init",
     "postpublish": "git push origin --follow-tags",
     "release": "standard-version -r",
     "release:first": "standard-version --first-release",
