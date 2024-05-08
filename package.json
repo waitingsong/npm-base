@@ -90,6 +90,7 @@
     "clean:dist": "npm run clean:cache && rm -rf dist/*",
     "clean:lock": "rm -f package-lock.json",
     "clean:log": "rm -rf ./logs ./run",
+    "clean:src": "find src -type f -iname \"*.js\" -print0 | xargs -P0 -0II  rm -f I",
     "cov": "c8 --all npm run test -- --parallel=false",
     "lint": "eslint --fix --cache src test",
     "lint:cycle": "madge --circular --extensions ts src",
