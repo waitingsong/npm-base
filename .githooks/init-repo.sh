@@ -19,6 +19,7 @@ if [ -z "$CI" ]; then
   git config --local core.precomposeUnicode true
   git config --local fetch.prune true
   git config --local pull.rebase true
+  git config --local push.autoSetupRemote true
   git config --local push.followTags true
   git config --local rebase.autoStash true
   git config --local remote.origin.prune true
@@ -30,4 +31,3 @@ echo It may going for a long time. Plese wait...
 .githooks/gen-file-from-example.mts
 
 echo init done
-
