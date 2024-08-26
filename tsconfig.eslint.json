@@ -1,11 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "declarationMap": false,
-    "noEmit": true,
-    "sourceMap": false
+    "noEmit": true
   },
   "include": [
+    "demo/**/*.mts",
+    "demo/**/*.ts",
     "src/**/*.ts",
     "src/**/*.mts",
     "test/**/*.ts",
