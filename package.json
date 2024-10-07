@@ -37,7 +37,7 @@
     "@commitlint/config-conventional": "19",
     "@types/mocha": "10",
     "@types/node": "22",
-    "@waiting/eslint-config": "^12.0.0",
+    "@waiting/eslint-config": "^15.1.0",
     "@waiting/shared-core": "^23.21.0",
     "cross-env": "7",
     "eslint": "8",
