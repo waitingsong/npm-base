@@ -13,7 +13,7 @@
 
 以下所有命令行操作都在 `git-bash` 窗口中执行
 
-## 安装全局依赖
+## Install global deps for development
 ```sh
 npm i -g c8 madge rollup tsx zx
 ```
